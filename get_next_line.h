@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 21:09:40 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 11:23:29 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 18:57:00 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 int		ft_newline(char *str);
 int		ft_get_line(char *stack, char **line, int nl);
-char	*ft_join(char const *s1, char const *s2);
+char	*ft_join(char *s1, char *s2);
 int		get_next_line(int fd, char **line);
 
 size_t	ft_strlen(const char *str);
