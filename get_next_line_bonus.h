@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:31:15 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 19:27:59 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 20:46:00 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		get_next_line(int fd, char **line);
 
 size_t	ft_strlen(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
-void	*ft_memmove(void *dest, const void *src, size_t len);
+void	*ft_memmove(void *dest, void *src, size_t len);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 

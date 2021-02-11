@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:30:56 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 19:26:50 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 20:46:29 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_cp(int fd, char **line)
 {
-	return (fd < 0 || !(line) || fd > OPEN_MAX || BUFFER_SIZE < 1);
+	return (fd < 0 || !(line) || fd > FOPEN_MAX || BUFFER_SIZE < 1);
 }
 
 int		ft_newline(char *str)
@@ -48,26 +48,28 @@ char	*ft_join(char *s1, char *s2)
 	char	*ptr;
 	int		size;
 
-	if (!s2)
-		return (NULL);
 	if (!s1)
 		return (ft_strdup(s2));
+	if (!s2)
+		return (NULL);
 	size = ft_strlen(s1) + ft_strlen(s2);
 	if (!(ptr = (char *)ft_calloc(sizeof(char), (size + 1))))
 		return (NULL);
 	ft_memmove(ptr, s1, ft_strlen(s1));
 	ft_memmove(ptr + ft_strlen(s1), s2, ft_strlen(s2));
+	free(s1);
+	s1 = NULL;
 	return (ptr);
 }
 
 int		get_next_line(int fd, char **line)
 {
 	static char	*stack[OPEN_MAX];
-	char		*heap;
+	char		heap[BUFFER_SIZE + 1];
 	int			ret;
 	int			nl;
 
-	if (ft_cp(fd, line) || !(heap = malloc((sizeof(char) * BUFFER_SIZE) + 1)))
+	if (read(fd, heap, 0) < 0 || ft_cp(fd, line))
 		return (-1);
 	if (stack[fd] && (((nl = ft_newline(stack[fd])) != -1)))
 		return (ft_get_line(stack[fd], line, nl));

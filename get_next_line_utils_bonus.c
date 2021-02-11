@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:30:23 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 11:16:55 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 20:46:53 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (ptr);
 }
 
-void	*ft_memmove(void *dest, const void *src, size_t len)
+void	*ft_memmove(void *dest, void *src, size_t len)
 {
 	unsigned char	*ptr;
 	unsigned char	*ptr2;
@@ -56,7 +56,7 @@ void	*ft_memmove(void *dest, const void *src, size_t len)
 		while (len--)
 			ptr[len] = ptr2[len];
 	}
-	return (dest);
+	return (ptr);
 }
 
 char	*ft_strdup(const char *s)
