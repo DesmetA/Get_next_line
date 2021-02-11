@@ -3,25 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: areheis <areheis@student.s19.be>           +#+  +:+       +#+        */
+/*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/22 16:31:53 by areheis           #+#    #+#             */
-/*   Updated: 2020/12/06 14:47:34 by areheis          ###   ########.fr       */
+/*   Created: 2021/02/05 21:09:40 by adesmet           #+#    #+#             */
+/*   Updated: 2021/02/11 20:28:05 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
 # include <unistd.h>
 # include <stdlib.h>
-# include <stddef.h>
+# include <sys/types.h>
+# include <sys/uio.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <stdio.h>
 
+int		ft_newline(char *str);
+int		ft_get_line(char *stack, char **line, int nl);
+char	*ft_join(char *s1, char *s2);
 int		get_next_line(int fd, char **line);
-char	*ft_strdup(const char *src);
-char	*ft_strjoin_free(char *s1, char *s2);
-char	*ft_substr(char const *src, unsigned int start, size_t len);
+
 size_t	ft_strlen(const char *str);
-void	*ft_memmove(void *dst, const void *src, size_t len);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memmove(void *dest, void *src, size_t len);
+char	*ft_strdup(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+
 #endif
