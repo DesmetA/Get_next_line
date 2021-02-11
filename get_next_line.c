@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 21:01:50 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 21:47:41 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 21:49:34 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_join(char *s1, char *s2)
 int		get_next_line(int fd, char **line)
 {
 	static char	*stack;
-	char		heap;
+	char		*heap;
 	int			ret;
 	int			nl;
 
