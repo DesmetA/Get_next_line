@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:30:56 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 17:48:50 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 18:09:33 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ char	*ft_join(char const *s1, char const *s2)
 	char	*ptr;
 	int		size;
 
-	if (!s1)
+	if (!s1 || !s2)
 		return (NULL);
-	if (!s2)
-		return (s1);
 	size = ft_strlen(s1) + ft_strlen(s2);
 	if (!(ptr = (char *)ft_calloc(sizeof(char), (size + 1))))
 		return (NULL);
@@ -74,7 +72,10 @@ int		get_next_line(int fd, char **line)
 	while ((ret = read(fd, heap, BUFFER_SIZE)) > 0)
 	{
 		heap[ret] = '\0';
-		stack[fd] = ft_join(stack[fd], heap);
+		if(!stack[fd])
+            stack[fd] = ft_strdup(heap);
+        else
+            stack[fd] = ft_join(stack[fd],heap);
 		if ((nl = ft_newline(stack[fd])) != -1)
 			return (ft_get_line(stack[fd], line, nl));
 	}
