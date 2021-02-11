@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 21:01:50 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 21:55:05 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 21:58:16 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	*ft_join(char *s1, char *s2)
 	ft_memmove(ptr + ft_strlen(s1), s2, ft_strlen(s2));
 	free(s1);
 	s1 = NULL;
+	free(s2);
+	s2 = NULL;
 	return (ptr);
 }
 
@@ -79,7 +81,6 @@ int		get_next_line(int fd, char **line)
 		stack = ft_join(stack, heap);
 		if ((nl = ft_newline(stack)) != -1)
 			return (ft_get_line(stack, line, nl));
-		free(heap);
 	}
 	if (stack)
 	{
