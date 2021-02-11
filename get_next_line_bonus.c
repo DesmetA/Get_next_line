@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:30:56 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 19:02:25 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 19:04:21 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		get_next_line(int fd, char **line)
 	while ((ret = read(fd, heap, BUFFER_SIZE)) > 0)
 	{
 		heap[ret] = '\0';
-		stack[fd] = ft_join(stack[fd],heap);
+		stack[fd] = ft_join(stack[fd], heap);
 		if ((nl = ft_newline(stack[fd])) != -1)
 			return (ft_get_line(stack[fd], line, nl));
 	}
