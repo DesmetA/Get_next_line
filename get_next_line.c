@@ -6,11 +6,16 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 21:01:50 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 19:04:31 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 19:27:56 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int		ft_cp(int fd, char **line)
+{
+	return (fd < 0 || !(line) || fd > OPEN_MAX || BUFFER_SIZE < 1);
+}
 
 int		ft_newline(char *str)
 {
@@ -62,7 +67,7 @@ int		get_next_line(int fd, char **line)
 	int			ret;
 	int			nl;
 
-	if (fd < 0 || !(line) || !(heap = malloc((sizeof(char) * BUFFER_SIZE) + 1)))
+	if (ft_cp(fd, line) || !(heap = malloc((sizeof(char) * BUFFER_SIZE) + 1)))
 		return (-1);
 	if (stack && (((nl = ft_newline(stack)) != -1)))
 		return (ft_get_line(stack, line, nl));

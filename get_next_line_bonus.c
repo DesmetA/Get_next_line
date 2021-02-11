@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:30:56 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 19:04:21 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 19:26:50 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_cp(int fd, char **line)
 {
-	return (fd < 0 || !(line) || fd > OPEN_MAX);
+	return (fd < 0 || !(line) || fd > OPEN_MAX || BUFFER_SIZE < 1);
 }
 
 int		ft_newline(char *str)
