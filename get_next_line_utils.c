@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 21:01:47 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/08 14:43:28 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/11 10:21:54 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ size_t	ft_strlen(const char *str)
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	unsigned char	*ptr;
-	size_t	i;
+	size_t			i;
 
 	i = -1;
 	if (!(ptr = malloc(sizeof(char) * (size * nmemb))))
 		return (NULL);
-	while(++i<size*nmemb)
-		ptr[i]='\0';
+	while (++i < size * nmemb)
+		ptr[i] = '\0';
 	return (ptr);
 }
 
