@@ -3,92 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: areheis <areheis@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/07 21:01:50 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 21:58:16 by adesmet          ###   ########.fr       */
+/*   Created: 2020/11/22 16:31:02 by areheis           #+#    #+#             */
+/*   Updated: 2020/12/06 16:19:52 by areheis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_cp(int fd, char **line)
-{
-	return (fd < 0 || !(line) || fd > FOPEN_MAX || BUFFER_SIZE < 1);
-}
-
-int		ft_newline(char *str)
+int		find_index(const char *str, int c)
 {
 	int i;
 
-	i = -1;
-	if (!str)
+	i = 0;
+	while (str[i] && str[i] != (char)c)
+		i++;
+	if (str[i] != (char)c)
 		return (-1);
-	while (str[++i])
-	{
-		if (str[i] == '\n')
-			return (i);
-	}
-	return (-1);
+	return (i);
 }
 
-int		ft_get_line(char *stack, char **line, int nl)
+int		get_line(char *str, char **line, int i)
 {
-	int i;
+	int len;
 
-	*line = ft_substr(stack, 0, nl);
-	nl++;
-	i = ft_strlen(stack + nl);
-	ft_memmove(stack, stack + nl, i + 1);
+	*line = ft_substr(str, 0, i);
+	i++;
+	len = ft_strlen(str + i) + 1;
+	ft_memmove(str, str + i, len);
 	return (1);
 }
 
-char	*ft_join(char *s1, char *s2)
+char	*protect_dup(char *str)
 {
-	char	*ptr;
-	int		size;
+	char *line;
 
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (NULL);
-	size = ft_strlen(s1) + ft_strlen(s2);
-	if (!(ptr = (char *)ft_calloc(sizeof(char), (size + 1))))
-		return (NULL);
-	ft_memmove(ptr, s1, ft_strlen(s1));
-	ft_memmove(ptr + ft_strlen(s1), s2, ft_strlen(s2));
-	free(s1);
-	s1 = NULL;
-	free(s2);
-	s2 = NULL;
-	return (ptr);
+	if (!(line = ft_strdup(str)))
+		return ((char *)-1);
+	return (line);
+}
+
+char	*protect_join_free(char *s1, char *s2)
+{
+	char *stri;
+
+	if (!(stri = ft_strjoin_free(s1, s2)))
+		return ((char *)-1);
+	return (stri);
 }
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*stack;
-	char		*heap;
-	int			ret;
-	int			nl;
+	char			tmp[BUFFER_SIZE + 1];
+	static char		*str = NULL;
+	int				in[2];
 
-	if (ft_cp(fd, line) || !(heap = malloc(sizeof(char)*(BUFFER_SIZE+1))))
+	if (fd < 0 || !line || BUFFER_SIZE < 1 || read(fd, tmp, 0) < 0
+	|| fd > OPEN_MAX)
 		return (-1);
-	if (stack && (((nl = ft_newline(stack)) != -1)))
-		return (ft_get_line(stack, line, nl));
-	while ((ret = read(fd, heap, BUFFER_SIZE)) > 0)
+	if (str && (((in[0] = find_index(str, '\n')) != -1)))
+		return (get_line(str, line, in[0]));
+	while (((in[1] = read(fd, tmp, BUFFER_SIZE)) > 0))
 	{
-		heap[ret] = '\0';
-		stack = ft_join(stack, heap);
-		if ((nl = ft_newline(stack)) != -1)
-			return (ft_get_line(stack, line, nl));
+		tmp[in[1]] = '\0';
+		str = protect_join_free(str, tmp);
+		if (((in[0] = find_index(str, '\n')) != -1))
+			return (get_line(str, line, in[0]));
 	}
-	if (stack)
+	if (str)
 	{
-		*line = ft_strdup(stack);
-		free(stack);
-		stack = NULL;
-		return (ret);
+		*line = protect_dup(str);
+		free(str);
+		str = NULL;
+		return (in[1]);
 	}
-	*line = ft_strdup("");
-	return (ret);
+	*line = protect_dup("");
+	return (in[1]);
 }
