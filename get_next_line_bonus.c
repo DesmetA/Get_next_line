@@ -6,15 +6,17 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:30:56 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/11 20:46:29 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/12 11:45:36 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-int		ft_cp(int fd, char **line)
+int		ft_free(char *tbf)
 {
-	return (fd < 0 || !(line) || fd > FOPEN_MAX || BUFFER_SIZE < 1);
+	free(tbf);
+	tbf = NULL;
+	return (1);
 }
 
 int		ft_newline(char *str)
@@ -65,28 +67,28 @@ char	*ft_join(char *s1, char *s2)
 int		get_next_line(int fd, char **line)
 {
 	static char	*stack[OPEN_MAX];
-	char		heap[BUFFER_SIZE + 1];
-	int			ret;
-	int			nl;
+	char		*heap;
+	int			tab[2];
 
-	if (read(fd, heap, 0) < 0 || ft_cp(fd, line))
+	if (fd < 0 || !(line) || fd > OPEN_MAX || BUFFER_SIZE < 1
+		|| !(heap = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	if (stack[fd] && (((nl = ft_newline(stack[fd])) != -1)))
-		return (ft_get_line(stack[fd], line, nl));
-	while ((ret = read(fd, heap, BUFFER_SIZE)) > 0)
+	if (stack && (((tab[1] = ft_newline(stack[fd])) != -1)) && ft_free(heap))
+		return (ft_get_line(stack[fd], line, tab[1]));
+	while ((tab[0] = read(fd, heap, BUFFER_SIZE)) > 0)
 	{
-		heap[ret] = '\0';
+		heap[tab[0]] = '\0';
 		stack[fd] = ft_join(stack[fd], heap);
-		if ((nl = ft_newline(stack[fd])) != -1)
-			return (ft_get_line(stack[fd], line, nl));
+		if (((tab[1] = ft_newline(stack[fd])) != -1) && ft_free(heap))
+			return (ft_get_line(stack[fd], line, tab[1]));
 	}
 	if (stack[fd])
 	{
-		*line = ft_strdup(stack[fd]);
+		((*line = ft_strdup(stack[fd])) && ft_free(heap));
 		free(stack[fd]);
 		stack[fd] = NULL;
-		return (ret);
+		return (tab[0]);
 	}
-	*line = ft_strdup("");
-	return (ret);
+	((*line = ft_strdup("")) && ft_free(heap));
+	return (tab[0]);
 }
