@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:30:56 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/12 11:48:26 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/12 12:02:34 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		ft_free(char *tbf)
 	return (1);
 }
 
-int		ft_newline(char *str)
+int		ft_nl(char *str)
 {
 	int i;
 
@@ -73,13 +73,13 @@ int		get_next_line(int fd, char **line)
 	if (fd < 0 || !(line) || fd > OPEN_MAX || BUFFER_SIZE < 1
 		|| !(heap = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	if (stack[fd] && (((tab[1] = ft_newline(stack[fd])) != -1)) && ft_free(heap))
+	if (stack[fd] && (((tab[1] = ft_nl(stack[fd])) != -1)) && ft_free(heap))
 		return (ft_get_line(stack[fd], line, tab[1]));
 	while ((tab[0] = read(fd, heap, BUFFER_SIZE)) > 0)
 	{
 		heap[tab[0]] = '\0';
 		stack[fd] = ft_join(stack[fd], heap);
-		if (((tab[1] = ft_newline(stack[fd])) != -1) && ft_free(heap))
+		if (((tab[1] = ft_nl(stack[fd])) != -1) && ft_free(heap))
 			return (ft_get_line(stack[fd], line, tab[1]));
 	}
 	if (stack[fd])
