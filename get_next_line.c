@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 21:01:50 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/12 10:10:15 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/12 10:16:12 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		ft_free(char *tbf)
 {
 	free(tbf);
+	tbf = NULL;
 	return (1);
 }
 
@@ -79,8 +80,7 @@ int		get_next_line(int fd, char **line)
 	{
 		heap[ret] = '\0';
 		stack = ft_join(stack, heap);
-		free(heap);
-		if ((nl = ft_newline(stack)) != -1)
+		if (((nl = ft_newline(stack)) != -1) && ft_free(heap))
 			return (ft_get_line(stack, line, nl));
 	}
 	if (stack)
