@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 21:01:50 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/12 09:35:04 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/12 09:44:12 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		ft_free(char *tbf)
 	return (1);
 }
 
-int		t_newline(char *str)
+int		ft_newline(char *str)
 {
 	int i;
 
