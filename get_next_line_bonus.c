@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:30:56 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/12 11:45:36 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/12 11:48:26 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		get_next_line(int fd, char **line)
 	if (fd < 0 || !(line) || fd > OPEN_MAX || BUFFER_SIZE < 1
 		|| !(heap = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	if (stack && (((tab[1] = ft_newline(stack[fd])) != -1)) && ft_free(heap))
+	if (stack[fd] && (((tab[1] = ft_newline(stack[fd])) != -1)) && ft_free(heap))
 		return (ft_get_line(stack[fd], line, tab[1]));
 	while ((tab[0] = read(fd, heap, BUFFER_SIZE)) > 0)
 	{
