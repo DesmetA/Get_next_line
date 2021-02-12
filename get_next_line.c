@@ -6,7 +6,7 @@
 /*   By: adesmet <adesmet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 21:01:50 by adesmet           #+#    #+#             */
-/*   Updated: 2021/02/12 11:07:50 by adesmet          ###   ########.fr       */
+/*   Updated: 2021/02/12 11:15:30 by adesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,27 @@ int		get_next_line(int fd, char **line)
 {
 	static char	*stack;
 	char		*heap;
-	int			ret;
-	int			nl;
+	int			tab[2];
 
 	if (fd < 0 || !(line) || fd > FOPEN_MAX || BUFFER_SIZE < 1
 		|| !(heap = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	if (stack && (((nl = ft_newline(stack)) != -1)) && ft_free(heap))
-		return (ft_get_line(stack, line, nl));
-	while ((ret = read(fd, heap, BUFFER_SIZE)) > 0)
+	if (stack && (((tab[1] = ft_newline(stack)) != -1)) && ft_free(heap))
+		return (ft_get_line(stack, line, tab[1]));
+	while ((tab[0] = read(fd, heap, BUFFER_SIZE)) > 0)
 	{
-		heap[ret] = '\0';
+		heap[tab[0]] = '\0';
 		stack = ft_join(stack, heap);
-		if (((nl = ft_newline(stack)) != -1) && ft_free(heap))
-			return (ft_get_line(stack, line, nl));
+		if (((tab[1] = ft_newline(stack)) != -1) && ft_free(heap))
+			return (ft_get_line(stack, line, tab[1]));
 	}
 	if (stack)
 	{
 		((*line = ft_strdup(stack)) && ft_free(heap));
-		ft_free(stack);
-		return (ret);
+		free(stack);
+		stack = NULL;
+		return (tab[0]);
 	}
 	((*line = ft_strdup("")) && ft_free(heap));
-	return (ret);
+	return (tab[0]);
 }
